@@ -1,0 +1,29 @@
+### Env
+# @baseUrl = http://localhost:5003
+@baseUrl = http://localhost:9999
+@createdAt = {{$datetime iso8601}}
+@modifiedBy = {{$processEnv USERNAME}}
+
+
+### Extrato
+GET {{baseUrl}}/clientes/1/extrato
+
+### Transação - Crédito
+POST {{baseUrl}}/clientes/1/transacoes
+Content-Type: application/json
+
+{
+  "valor": 1000,
+  "tipo" : "c",
+  "descricao" : "Um Crédito"
+}
+
+### Transação - Débito
+POST {{baseUrl}}/clientes/1/transacoes
+Content-Type: application/json
+
+{
+  "valor": 1000,
+  "tipo" : "d",
+  "descricao" : "Um Débito"
+}

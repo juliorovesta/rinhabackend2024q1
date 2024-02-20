@@ -1,0 +1,44 @@
+version: '3'
+
+services:
+  postgres:
+    image: postgres:alpine
+    hostname: postgres
+    environment:
+      - POSTGRES_USER=rinha
+      - POSTGRES_PASSWORD=rinha123
+      - POSTGRES_DB=rinha
+    # expose:
+    #   - 5433
+    ports:
+      - "5433:5432"
+    volumes:
+      - ./sql/1-init.sql:/docker-entrypoint-initdb.d/1-init.sql:ro
+      - ./sql/2-functions.sql:/docker-entrypoint-initdb.d/2-functions.sql:ro
+      - postgres-data:/var/lib/postgresql/data
+    command: postgres -p 5432 -c checkpoint_timeout=600 -c max_wal_size=4096
+    # network_mode: host
+
+  pgadmin:
+    image: dpage/pgadmin4
+    hostname: pgadmin
+    environment:
+      # - PGADMIN_LISTEN_PORT=15433
+      - PGADMIN_DEFAULT_EMAIL=rinha@localhost.com
+      - PGADMIN_DEFAULT_PASSWORD=rinha123
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+    # expose:
+    #   - 15433
+    ports:
+      - "15433:80"
+    # network_mode: host
+
+volumes:
+  postgres-data:
+  pgadmin-data:
+
+networks:
+  default:
+    name: local-network
+    driver: bridge

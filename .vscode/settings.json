@@ -1,0 +1,11 @@
+{
+  "explorer.autoReveal": false,
+  "scm.defaultViewMode": "tree",
+  "editor.formatOnSave": true,
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+  },
+  "[csharp]": {
+    "editor.defaultFormatter": "csharpier.csharpier-vscode"
+  }
+}

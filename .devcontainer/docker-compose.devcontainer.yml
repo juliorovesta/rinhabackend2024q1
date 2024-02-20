@@ -1,0 +1,35 @@
+version: '3'
+
+services:
+  devcontainer:
+    build:
+      context: ./.devcontainer
+      dockerfile: Dockerfile
+    hostname: devcontainer
+    privileged: true
+    init: true
+    ipc: host
+    # security_opt:
+    #   - apparmor=unconfined
+    #   - seccomp=unconfined
+    #   - systempaths=unconfined
+    volumes:
+      # Mount the root folder that contains .git
+      - .:/workspace:cached
+      # - /var/run/docker.sock:/var/run/docker-host.sock
+    #   - /var/run/docker.sock:/var/run/docker.sock
+    #   - /run/dbus/system_bus_socket:/run/dbus/system_bus_socket
+    # environment:
+    #   BUILDKITD_FLAGS: --oci-worker-no-process-sandbox
+    #   DBUS_SYSTEM_BUS_ADDRESS: unix:path=/run/dbus/system_bus_socket
+    #   DBUS_SESSION_BUS_ADDRESS: unix:path=/run/vscode/1000/bus
+   # network_mode: service:db
+    command: /bin/sh -c "while sleep 1000; do :; done"
+    # extra_hosts:
+    #   - "host.docker.internal:host-gateway"
+    # network_mode: host
+
+networks:
+  default:
+    name: local-network
+    driver: bridge
